@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { getUser } from "../Data/userData";
 import LineChart from "./LineChart";

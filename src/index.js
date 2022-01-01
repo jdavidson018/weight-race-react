@@ -8,8 +8,6 @@ import {
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Dashboard from './Pages/Dashboard';
-import Invoices from './Pages/Invoices';
-import Invoice from './Pages/Invoice';
 import Users from './Pages/Users';
 import User from './Components/User';
 
