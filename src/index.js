@@ -1,12 +1,46 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom"; import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Dashboard from './Pages/Dashboard';
+import Invoices from './Pages/Invoices';
+import Invoice from './Pages/Invoice';
+import Users from './Pages/Users';
+import User from './Components/User';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="users" element={<Users />} >
+            <Route
+              index
+              element={
+                <main style={{ padding: "1rem" }}>
+                  <p>Select an invoice</p>
+                </main>
+              }
+            />
+            <Route path=":userId" element={<User />} />
+          </Route>
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
