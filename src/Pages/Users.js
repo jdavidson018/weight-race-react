@@ -1,9 +1,7 @@
 import { Typography } from "@mui/material";
 import { Outlet } from "react-router-dom";
-// import { getUsers } from "../Data/userData";
 
 const Users = () => {
-    //let users = getUsers();
     return (
         <div style={{ textAlign: "center" }}>
             <Typography variant="h6">

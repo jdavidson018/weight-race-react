@@ -9,9 +9,7 @@ import {
     Tooltip,
     Legend,
 } from 'chart.js';
-import { useParams } from "react-router-dom";
 import { Line } from 'react-chartjs-2';
-import { getUser } from "../Data/userData";
 
 ChartJS.register(
     CategoryScale,
@@ -31,23 +29,27 @@ const options = {
         },
         title: {
             display: true,
-            text: 'Chart.js Line Chart',
+            text: 'Progress',
         },
     },
 };
 
 const LineChart = (props) => {
-    let params = useParams();
-    let user = getUser(parseInt(params.userId, 10));
-    console.log(user);
 
-    let labels = user.weights.map(x => x.dateLogged.toDateString());
+    //console.log(user);
+    if (!props.weights) {
+        return (
+            <h1>No Weights Logged</h1>
+        )
+    }
+    console.log(props.weights);
+    let labels = props.weights.map(x => x.weightId);
     let data = {
         labels,
         datasets: [
             {
-                label: 'Dataset 1',
-                data: user.weights.map(x => x.value),
+                label: props.label,
+                data: props.weights.map(x => x.value),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }

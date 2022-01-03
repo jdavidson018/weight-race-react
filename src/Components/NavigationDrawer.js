@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -9,12 +9,22 @@ import Typography from '@mui/material/Typography';
 import { NavLink, Outlet } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { getUsers } from "../Data/userData";
+import UserService from '../Services/UserService';
 
 const drawerWidth = 240;
 
 export default function NavigationDrawer() {
-    let users = getUsers();
+    //let users = getUsers();
+    const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        UserService.getUsers().then((users) => {
+            setUsers(users);
+            setIsLoading(false);
+        });
+    }, [])
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -48,7 +58,10 @@ export default function NavigationDrawer() {
                                 <Typography>Users</Typography>
                             </AccordionSummary>
                             <AccordionDetails>
-                                {users.map(user => (
+                                {isLoading && (
+                                    <h1>Loading...</h1>
+                                )}
+                                {!isLoading && users.map(user => (
                                     <NavLink
                                         style={({ isActive }) => {
                                             return {
@@ -60,7 +73,7 @@ export default function NavigationDrawer() {
                                         to={`/users/${user.userId}`}
                                         key={user.userId}
                                     >
-                                        {user.name}
+                                        {user.firstName + " " + user.lastName}
                                     </NavLink>
                                 ))}
                             </AccordionDetails>
