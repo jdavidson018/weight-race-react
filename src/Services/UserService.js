@@ -4,7 +4,7 @@ import axios from 'axios';
 // const USER_API_BASE_URL = "http://localhost:5241/api/user";
 
 // Production
-const USER_API_BASE_URL = "http://157.245.115.191/api/user";
+const USER_API_BASE_URL = "https://www.weightraceapi.com/api/user";
 
 class UserService {
 

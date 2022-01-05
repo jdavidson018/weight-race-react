@@ -4,7 +4,7 @@ import axios from 'axios';
 // const WWIGHT_API_BASE_URL = "http://localhost:5241/api/weight";
 
 // Production
-const WWIGHT_API_BASE_URL = "http://157.245.115.191/api/weight";
+const WWIGHT_API_BASE_URL = "https://weightraceapi.com/api/weight";
 
 class WeightService {
 
