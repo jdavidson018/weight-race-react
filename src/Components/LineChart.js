@@ -8,7 +8,10 @@ import {
     Title,
     Tooltip,
     Legend,
+    TimeScale
 } from 'chart.js';
+import 'chartjs-adapter-date-fns';
+
 import { Line } from 'react-chartjs-2';
 
 ChartJS.register(
@@ -18,10 +21,10 @@ ChartJS.register(
     LineElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    TimeScale
 );
-
-const options = {
+var options = {
     responsive: true,
     plugins: {
         legend: {
@@ -32,7 +35,27 @@ const options = {
             text: 'Progress',
         },
     },
-};
+    scales: {
+        x: {
+            title: "Time",
+            type: 'time',
+            time: {
+                unit: 'day'
+            },
+            displayFormats: {
+                millisecond: 'MMM DD',
+                second: 'MMM DD',
+                minute: 'MMM DD',
+                hour: 'MMM DD',
+                day: 'MMM DD',
+                week: 'MMM DD',
+                month: 'MMM DD',
+                quarter: 'MMM DD',
+                year: 'MMM DD',
+            }
+        }
+    }
+}
 
 const LineChart = (props) => {
 
@@ -43,7 +66,7 @@ const LineChart = (props) => {
         )
     }
     console.log(props.weights);
-    let labels = props.weights.map(x => x.weightId);
+    let labels = props.weights.map(x => x.logDate.substring(0, 10)); //Only take the date part of the string so time is not part of the scale
     let data = {
         labels,
         datasets: [
