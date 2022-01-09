@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 // Local/Dev
-const WEIGHT_API_BASE_URL = "http://localhost:5241/api/weight";
+// const WEIGHT_API_BASE_URL = "http://localhost:5241/api/weight";
 // Production
-// const WEIGHT_API_BASE_URL = "https://weightraceapi.com/api/weight";
+const WEIGHT_API_BASE_URL = "https://weightraceapi.com/api/weight";
 
 class WeightService {
 
