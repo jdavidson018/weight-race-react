@@ -3,10 +3,12 @@ import { Button, Card, CardContent, Divider, Grid, TextField, Typography } from 
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
-import WeightService from '../Services/WeightService';
 import DismissableAlert from './DismissableAlert';
+import { useDispatch } from 'react-redux'
+import { addActiveUserWeight } from '../Redux/Slices/usersSlice'
 
 const WeightInputForm = (props) => {
+    const dispatch = useDispatch()
     const [weight, setWeight] = useState("")
     const [logDate, setLogDate] = useState(new Date());
     const [showAlert, setShowAlert] = useState(false);
@@ -14,8 +16,10 @@ const WeightInputForm = (props) => {
         setShowAlert(false);
     }
     const handleSubmit = () => {
-        WeightService.createWeight({ logDate: logDate, value: weight, userId: props.user.userId }).then(() => setShowAlert(true));
+        dispatch(addActiveUserWeight({ logDate: logDate, value: weight, userId: props.user.userId }));
+        setShowAlert(true);
     }
+
     return (
         <>
             <DismissableAlert closeAlert={closeAlert} show={showAlert} text={"Woohoo!!! Your new weight was added. Please refresh the page to update graph."} />

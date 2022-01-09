@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import AppBar from '@mui/material/AppBar';
@@ -9,21 +9,18 @@ import Typography from '@mui/material/Typography';
 import { NavLink, Outlet } from "react-router-dom";
 import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import UserService from '../Services/UserService';
-
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchUsers } from '../Redux/Slices/usersSlice'
 const drawerWidth = 240;
 
 export default function NavigationDrawer() {
-    //let users = getUsers();
-    const [users, setUsers] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const dispatch = useDispatch()
+    let isLoading = useSelector((state) => state.users.loading) === "pending";
+    let users = useSelector((state) => state.users.users);
 
     useEffect(() => {
-        UserService.getUsers().then((users) => {
-            setUsers(users);
-            setIsLoading(false);
-        });
-    }, [])
+        dispatch(fetchUsers());
+    }, [dispatch])
 
     return (
         <Box sx={{ display: 'flex' }}>

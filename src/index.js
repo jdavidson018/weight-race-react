@@ -10,35 +10,40 @@ import reportWebVitals from './reportWebVitals';
 import Dashboard from './Pages/Dashboard';
 import Users from './Pages/Users';
 import User from './Components/User';
+import { Provider } from 'react-redux';
+import store from './Redux/store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <HashRouter>
-      <Routes>
-        <Route path="/" element={<App />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="users" element={<Users />} >
+    <Provider store={store}>
+
+      <HashRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="users" element={<Users />} >
+              <Route
+                index
+                element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>Select an invoice</p>
+                  </main>
+                }
+              />
+              <Route path=":userId" element={<User />} />
+            </Route>
             <Route
-              index
+              path="*"
               element={
                 <main style={{ padding: "1rem" }}>
-                  <p>Select an invoice</p>
+                  <p>There's nothing here!</p>
                 </main>
               }
             />
-            <Route path=":userId" element={<User />} />
           </Route>
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>There's nothing here!</p>
-              </main>
-            }
-          />
-        </Route>
-      </Routes>
-    </HashRouter>
+        </Routes>
+      </HashRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

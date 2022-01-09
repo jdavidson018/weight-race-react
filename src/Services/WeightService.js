@@ -1,16 +1,26 @@
 import axios from 'axios';
 
 // Local/Dev
-// const WWIGHT_API_BASE_URL = "http://localhost:5241/api/weight";
-
+const WEIGHT_API_BASE_URL = "http://localhost:5241/api/weight";
 // Production
-const WWIGHT_API_BASE_URL = "https://weightraceapi.com/api/weight";
+// const WEIGHT_API_BASE_URL = "https://weightraceapi.com/api/weight";
 
 class WeightService {
 
     getWeights = async () => {
         try {
-            const resp = await axios.get(WWIGHT_API_BASE_URL);
+            const resp = await axios.get(WEIGHT_API_BASE_URL);
+            return resp.data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    getUserWeights = async (userId) => {
+        try {
+            const resp = await axios.get(WEIGHT_API_BASE_URL + '/GetUserWeights/' + userId);
+            console.log("Going for it");
+            console.log(resp);
             return resp.data;
         } catch (err) {
             console.error(err);
@@ -19,7 +29,7 @@ class WeightService {
 
     getWeightById = async (weightId) => {
         try {
-            const resp = await axios.get(WWIGHT_API_BASE_URL + '/' + weightId);
+            const resp = await axios.get(WEIGHT_API_BASE_URL + '/' + weightId);
             return resp.data;
         } catch (err) {
             console.error(err);
@@ -27,16 +37,16 @@ class WeightService {
     }
 
     createWeight(weight) {
-        return axios.post(WWIGHT_API_BASE_URL, weight);
+        return axios.post(WEIGHT_API_BASE_URL, weight);
     }
 
 
     updateWeight(weight, weightId) {
-        return axios.put(WWIGHT_API_BASE_URL + '/' + weightId, weight);
+        return axios.put(WEIGHT_API_BASE_URL + '/' + weightId, weight);
     }
 
     deleteWeight(weightId) {
-        return axios.delete(WWIGHT_API_BASE_URL + '/' + weightId);
+        return axios.delete(WEIGHT_API_BASE_URL + '/' + weightId);
     }
 }
 
