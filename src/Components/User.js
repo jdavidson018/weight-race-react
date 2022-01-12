@@ -30,13 +30,14 @@ const User = () => {
             <Grid item xs={12}>
                 <Typography variant="p"><strong>Start Weight: </strong>{activeUser.startWeight}</Typography>
             </Grid>
-            <Grid item md={8} sm={12}>
+            <Grid item md={7} sm={12}>
                 <LineChart weights={activeUser.weights} label={activeUser.firstName + " " + activeUser.lastName} />
+                <br />
+                <Grid item md={7} sm={12} sx={{ mt: 3, ml: 3 }}>
+                    <WeightInputForm user={activeUser} />
+                </Grid>
             </Grid>
-            <Grid item md={4} sm={12} sx={{ mt: 8 }}>
-                <WeightInputForm user={activeUser} />
-            </Grid>
-            <Grid item xs={5} sx={{ mt: 3, ml: 3 }}>
+            <Grid item md={5} sm={12}>
                 <WeightLog />
             </Grid>
         </Grid>
