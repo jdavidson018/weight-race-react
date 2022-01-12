@@ -5,6 +5,7 @@ import LineChart from "./LineChart";
 import WeightInputForm from "./WeightInputForm";
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchActiveUser } from '../Redux/Slices/usersSlice'
+import WeightLog from './WeightComponents/WeightLog';
 
 const User = () => {
     const dispatch = useDispatch()
@@ -29,11 +30,14 @@ const User = () => {
             <Grid item xs={12}>
                 <Typography variant="p"><strong>Start Weight: </strong>{activeUser.startWeight}</Typography>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item md={8} sm={12}>
                 <LineChart weights={activeUser.weights} label={activeUser.firstName + " " + activeUser.lastName} />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item md={4} sm={12} sx={{ mt: 8 }}>
                 <WeightInputForm user={activeUser} />
+            </Grid>
+            <Grid item xs={5} sx={{ mt: 3, ml: 3 }}>
+                <WeightLog />
             </Grid>
         </Grid>
     );

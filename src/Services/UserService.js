@@ -1,10 +1,7 @@
 import axios from 'axios';
+import { host } from '../Data/utilityVariables';
 
-// Local/Dev
-// const USER_API_BASE_URL = "http://localhost:5241/api/user";
-
-// Production
-const USER_API_BASE_URL = "https://www.weightraceapi.com/api/user";
+const USER_API_BASE_URL = `${host}/api/user`;
 
 class UserService {
 

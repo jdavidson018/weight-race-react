@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { host } from '../Data/utilityVariables';
 
 // Local/Dev
 // const WEIGHT_API_BASE_URL = "http://localhost:5241/api/weight";
 // Production
-const WEIGHT_API_BASE_URL = "https://weightraceapi.com/api/weight";
+const WEIGHT_API_BASE_URL = `${host}/api/weight`;
 
 class WeightService {
 
@@ -19,8 +20,6 @@ class WeightService {
     getUserWeights = async (userId) => {
         try {
             const resp = await axios.get(WEIGHT_API_BASE_URL + '/GetUserWeights/' + userId);
-            console.log("Going for it");
-            console.log(resp);
             return resp.data;
         } catch (err) {
             console.error(err);

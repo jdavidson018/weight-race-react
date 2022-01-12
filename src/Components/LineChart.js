@@ -48,13 +48,11 @@ var options = {
 
 const LineChart = (props) => {
 
-    //console.log(user);
     if (!props.weights) {
         return (
             <h1>No Weights Logged</h1>
         )
     }
-    console.log(props.weights);
     let labels = props.weights.map(x => x.logDate.substring(0, 10)); //Only take the date part of the string so time is not part of the scale
     let data = {
         labels,

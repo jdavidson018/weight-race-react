@@ -4,31 +4,44 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import DismissableAlert from './DismissableAlert';
-import { useDispatch } from 'react-redux'
-import { addActiveUserWeight } from '../Redux/Slices/usersSlice'
+import { useDispatch, useSelector } from 'react-redux'
+import { addActiveUserWeight, updateActiveUserWeight } from '../Redux/Slices/usersSlice'
+import PropTypes from 'prop-types';
 
 const WeightInputForm = (props) => {
     const dispatch = useDispatch()
-    const [weight, setWeight] = useState("")
-    const [logDate, setLogDate] = useState(new Date());
+    let isLoading = useSelector((state) => state.users.loadingActiveUser) === 'pending';
+    let activeUser = useSelector((state) => state.users.activeUser);
+    let title = props.edit ? "Edit Weight" : "Log Weight";
+
+    const [weight, setWeight] = useState(props.weight ? props.weight.value : "")
+    const [logDate, setLogDate] = useState(props.weight ? new Date(props.weight.logDate) : new Date());
     const [showAlert, setShowAlert] = useState(false);
     const closeAlert = () => {
         setShowAlert(false);
     }
     const handleSubmit = () => {
-        dispatch(addActiveUserWeight({ logDate: logDate, value: weight, userId: props.user.userId }));
-        setShowAlert(true);
+        if (props.edit) {
+            dispatch(updateActiveUserWeight({ weightId: props.weight.weightId, logDate: logDate, value: weight, userId: activeUser.userId }))
+            props.handleClose();
+        } else {
+            dispatch(addActiveUserWeight({ logDate: logDate, value: weight, userId: activeUser.userId }));
+            setShowAlert(true);
+        }
     }
 
+    if (isLoading) {
+        return <h1>Loading...</h1>
+    }
     return (
         <>
             <DismissableAlert closeAlert={closeAlert} show={showAlert} text={"Woohoo!!! Your new weight was added. Please refresh the page to update graph."} />
             <Card variant="outlined">
                 <CardContent>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
+                        <Grid item xs={12} sx={{ textAlign: 'center' }}>
                             <Typography variant="h5">
-                                Log Weight
+                                {title}
                             </Typography>
                             <Divider />
                         </Grid>
@@ -46,11 +59,25 @@ const WeightInputForm = (props) => {
                                 />
                             </LocalizationProvider>
                         </Grid>
-                        <Grid item xs={12} style={{ textAlign: "right", paddingRight: "5%" }}>
-                            <Button onClick={handleSubmit} variant="contained">
-                                Submit
-                            </Button>
-                        </Grid>
+                        {props.edit && (
+                            <>
+                                <Grid item xs={12} style={{ textAlign: "right", paddingRight: "2%" }}>
+                                    <Button onClick={props.handleClose} color="warning" variant="contained">
+                                        Cancel
+                                    </Button>
+                                    <Button onClick={handleSubmit} variant="contained" style={{ marginLeft: "1%" }}>
+                                        Submit
+                                    </Button>
+                                </Grid>
+                            </>
+                        )}
+                        {!props.edit && (
+                            <Grid item xs={12} style={{ textAlign: "right", paddingRight: "5%" }}>
+                                <Button onClick={handleSubmit} variant="contained">
+                                    Submit
+                                </Button>
+                            </Grid>
+                        )}
                     </Grid>
                 </CardContent>
             </Card>
@@ -58,5 +85,11 @@ const WeightInputForm = (props) => {
 
     );
 }
+
+WeightInputForm.propTypes = {
+    edit: PropTypes.bool,
+    weight: PropTypes.object
+};
+
 
 export default WeightInputForm;

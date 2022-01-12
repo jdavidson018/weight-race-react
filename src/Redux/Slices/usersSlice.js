@@ -78,4 +78,18 @@ export const addActiveUserWeight = (weight) => async (dispatch) => {
     dispatch(activeUserWeightsReceived(response));
 }
 
+export const updateActiveUserWeight = (weight) => async (dispatch) => {
+    dispatch(activeUserWeightsLoading());
+    await WeightService.updateWeight(weight, weight.weightId);
+    const response = await WeightService.getUserWeights(weight.userId);
+    dispatch(activeUserWeightsReceived(response));
+}
+
+export const deleteActiveUserWeight = (weight) => async (dispatch) => {
+    dispatch(activeUserWeightsLoading());
+    await WeightService.deleteWeight(weight.weightId);
+    const response = await WeightService.getUserWeights(weight.userId);
+    dispatch(activeUserWeightsReceived(response));
+}
+
 export default usersSlice.reducer
