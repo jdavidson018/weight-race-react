@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { random_rgba, stillLoadingStates } from '../Data/utilityVariables';
+import { fetchActiveUser, fetchActiveUserFriends } from '../Redux/Slices/usersSlice'
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -11,6 +14,7 @@ import {
     TimeScale
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
+import PropTypes from 'prop-types';
 
 import { Line } from 'react-chartjs-2';
 
@@ -26,6 +30,7 @@ ChartJS.register(
 );
 var options = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
         legend: {
             position: 'top',
@@ -37,6 +42,7 @@ var options = {
     },
     scales: {
         x: {
+            id: 'user-x-axis',
             title: "Time",
             type: 'time',
             time: {
@@ -47,25 +53,60 @@ var options = {
 }
 
 const LineChart = (props) => {
+    const dispatch = useDispatch()
+    let activeUserLoadingState = useSelector((state) => state.users.loadingActiveUser);
+    let activeUser = useSelector((state) => state.users.activeUser);
+    let friendsLoadingState = useSelector((state) => state.users.loadingActiveUserFriends);
+    let friends = useSelector((state) => state.users.activeUserFriends);
 
-    if (!props.weights) {
+    const [graphData, setGraphData] = useState([]);
+
+    useEffect(() => {
+        let newData = [];
+        if (activeUserLoadingState === 'unloaded') {
+            dispatch(fetchActiveUser(props.userId));
+        } else if (friendsLoadingState === 'unloaded') {
+            dispatch(fetchActiveUserFriends(props.userId));
+        } else if (!stillLoadingStates.includes(activeUserLoadingState) && !stillLoadingStates.includes(friendsLoadingState)) {
+            newData.push(
+                {
+                    label: 'You',
+                    data: activeUser.weights.map(x => (
+                        { x: x.logDate.substring(0, 10), y: x.value })),
+                    borderColor: 'rgb(255, 99, 132)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    xAxisId: 'user-x-axis'
+                }
+            )
+            friends.filter(x => x.weights).forEach(friend => {
+                newData.push(
+                    {
+                        label: friend.firstName,
+                        data: friend.weights.map(x => (
+                            { x: x.logDate.substring(0, 10), y: x.value })),
+                        borderColor: random_rgba()
+                    }
+                )
+            });
+            setGraphData(newData);
+        }
+    }, [friends, activeUser, props.userId, activeUserLoadingState, friendsLoadingState, dispatch])
+
+    if (stillLoadingStates.includes(activeUserLoadingState) || stillLoadingStates.includes(friendsLoadingState)) {
         return (
-            <h1>No Weights Logged</h1>
+            <h1>Still Loading</h1>
         )
     }
-    let labels = props.weights.map(x => x.logDate.substring(0, 10)); //Only take the date part of the string so time is not part of the scale
+
+    //let labels = activeUser.weights.map(x => x.logDate.substring(0, 10)); //Only take the date part of the string so time is not part of the scale
     let data = {
-        labels,
-        datasets: [
-            {
-                label: props.label,
-                data: props.weights.map(x => x.value),
-                borderColor: 'rgb(255, 99, 132)',
-                backgroundColor: 'rgba(255, 99, 132, 0.5)',
-            }
-        ],
+        datasets: graphData
     };
     return <Line options={options} data={data} />;
+}
+
+LineChart.propTypes = {
+    userId: PropTypes.string.isRequired
 }
 
 export default LineChart;

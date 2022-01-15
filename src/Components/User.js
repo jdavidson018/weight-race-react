@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { Grid, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import LineChart from "./LineChart";
 import WeightInputForm from "./WeightInputForm";
 import { useSelector, useDispatch } from 'react-redux'
-import { fetchActiveUser } from '../Redux/Slices/usersSlice'
+import { fetchActiveUser, fetchActiveUserFriends } from '../Redux/Slices/usersSlice'
 import WeightLog from './WeightComponents/WeightLog';
 
 const User = () => {
@@ -15,6 +15,7 @@ const User = () => {
 
     useEffect(() => {
         dispatch(fetchActiveUser(params.userId))
+        dispatch(fetchActiveUserFriends(params.userId))
     }, [params.userId, dispatch])
 
     if (isLoading || !activeUser) {
@@ -31,14 +32,16 @@ const User = () => {
                 <Typography variant="p"><strong>Start Weight: </strong>{activeUser.startWeight}</Typography>
             </Grid>
             <Grid item md={7} sm={12}>
-                <LineChart weights={activeUser.weights} label={activeUser.firstName + " " + activeUser.lastName} />
+                <Box sx={{ height: '95%' }}>
+                    <LineChart userId={params.userId} label={activeUser.firstName + " " + activeUser.lastName} />
+                </Box>
                 <br />
-                <Grid item md={7} sm={12} sx={{ mt: 3, ml: 3 }}>
-                    <WeightInputForm user={activeUser} />
-                </Grid>
             </Grid>
             <Grid item md={5} sm={12}>
                 <WeightLog />
+            </Grid>
+            <Grid item md={7} sm={12} sx={{ mt: 3 }}>
+                <WeightInputForm user={activeUser} />
             </Grid>
         </Grid>
     );

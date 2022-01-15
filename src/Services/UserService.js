@@ -14,6 +14,11 @@ class UserService {
         }
     }
 
+    getUserFriends = async (userId) => {
+        let resp = await this.getUsers();
+        return resp.filter(x => x.userId.toString() !== userId);
+    }
+
     getUserById = async (userId) => {
         try {
             const resp = await axios.get(USER_API_BASE_URL + '/' + userId);
