@@ -21,7 +21,6 @@ const app = firebase.initializeApp({
 
 const auth = app.auth();
 const db = app.firestore();
-
 // const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // const signInWithGoogle = async () => {
@@ -55,7 +54,7 @@ const registerWithEmailAndPassword = async (firstName, lastName, email, password
             phone: phone,
             dob: dob,
             userUid: user.uid
-        })
+        });
     } catch (err) {
         console.error(err);
         alert(err.message);

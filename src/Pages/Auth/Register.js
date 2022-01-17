@@ -24,18 +24,19 @@ export default function Register() {
     const [lastName, setLastName] = useState("");
     const [dob, setDob] = useState(new Date());
     const [phone, setPhone] = useState("");
-    const [user, loading] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const history = useNavigate();
 
     useEffect(() => {
-        if (loading) return;
         if (user) history(`/dashboard/${user.uid}`);
-    }, [user, loading, history]);
+    });
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        registerWithEmailAndPassword(firstName, lastName, email, password, phone, dob);
+        registerWithEmailAndPassword(firstName, lastName, email, password, phone, dob).then(() => {
+            history(`/dashboard/${user.uid}`);
+        });
     };
 
     return (
