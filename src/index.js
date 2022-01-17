@@ -7,7 +7,6 @@ import {
 } from "react-router-dom"; import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Users from './Pages/Users';
 import User from './Components/User';
 import { Provider } from 'react-redux';
 import store from './Redux/store';

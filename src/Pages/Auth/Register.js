@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
     auth,
     registerWithEmailAndPassword,
-    signInWithGoogle,
 } from "../../Services/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
@@ -10,10 +9,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import DesktopDatePicker from '@mui/lab/DesktopDatePicker';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { Link, useNavigate } from "react-router-dom";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';

@@ -22,7 +22,7 @@ const app = firebase.initializeApp({
 const auth = app.auth();
 const db = app.firestore();
 
-const googleProvider = new firebase.auth.GoogleAuthProvider();
+// const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 // const signInWithGoogle = async () => {
 //     try {
