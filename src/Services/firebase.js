@@ -55,6 +55,7 @@ const registerWithEmailAndPassword = async (firstName, lastName, email, password
             dob: dob,
             userUid: user.uid
         });
+        return user.uid
     } catch (err) {
         console.error(err);
         alert(err.message);

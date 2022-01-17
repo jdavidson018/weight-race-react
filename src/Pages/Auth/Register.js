@@ -29,13 +29,14 @@ export default function Register() {
 
     useEffect(() => {
         if (user) history(`/dashboard/${user.uid}`);
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        registerWithEmailAndPassword(firstName, lastName, email, password, phone, dob).then(() => {
-            history(`/dashboard/${user.uid}`);
+        registerWithEmailAndPassword(firstName, lastName, email, password, phone, dob).then((uid) => {
+            history(`/dashboard/${uid}`);
         });
     };
 
