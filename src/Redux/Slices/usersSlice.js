@@ -80,9 +80,9 @@ export const fetchUsers = () => async (dispatch) => {
     dispatch(usersReceived(response));
 }
 
-export const fetchActiveUser = (userId) => async (dispatch) => {
+export const fetchActiveUser = (userUid) => async (dispatch) => {
     dispatch(activeUserLoading());
-    const response = await UserService.getUserById(userId);
+    const response = await UserService.getUserById(userUid);
     dispatch(activeUserReceived(response));
 }
 
@@ -107,10 +107,10 @@ export const deleteActiveUserWeight = (weight) => async (dispatch) => {
     dispatch(activeUserWeightsReceived(response));
 }
 
-export const fetchActiveUserFriends = (userId) => async (dispatch) => {
+export const fetchActiveUserFriends = (userUid) => async (dispatch) => {
     dispatch(activeUserFriendsLoading());
-    console.log(userId);
-    const response = await UserService.getUserFriends(userId);
+    console.log(userUid);
+    const response = await UserService.getUserFriends(userUid);
     console.log('Hello');
     console.log(response);
     dispatch(activeUserFriendsReceived(response));

@@ -64,9 +64,9 @@ const LineChart = (props) => {
     useEffect(() => {
         let newData = [];
         if (activeUserLoadingState === 'unloaded') {
-            dispatch(fetchActiveUser(props.userId));
+            dispatch(fetchActiveUser(props.userUid));
         } else if (friendsLoadingState === 'unloaded') {
-            dispatch(fetchActiveUserFriends(props.userId));
+            dispatch(fetchActiveUserFriends(props.userUid));
         } else if (!stillLoadingStates.includes(activeUserLoadingState) && !stillLoadingStates.includes(friendsLoadingState)) {
             newData.push(
                 {
@@ -90,7 +90,7 @@ const LineChart = (props) => {
             });
             setGraphData(newData);
         }
-    }, [friends, activeUser, props.userId, activeUserLoadingState, friendsLoadingState, dispatch])
+    }, [friends, activeUser, props.userUid, activeUserLoadingState, friendsLoadingState, dispatch])
 
     if (stillLoadingStates.includes(activeUserLoadingState) || stillLoadingStates.includes(friendsLoadingState)) {
         return (
@@ -106,7 +106,7 @@ const LineChart = (props) => {
 }
 
 LineChart.propTypes = {
-    userId: PropTypes.string.isRequired
+    userUid: PropTypes.string.isRequired
 }
 
 export default LineChart;

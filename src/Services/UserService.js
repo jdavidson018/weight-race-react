@@ -14,14 +14,14 @@ class UserService {
         }
     }
 
-    getUserFriends = async (userId) => {
+    getUserFriends = async (userUid) => {
         let resp = await this.getUsers();
-        return resp.filter(x => x.userId.toString() !== userId);
+        return resp.filter(x => x.userUid.toString() !== userUid);
     }
 
-    getUserById = async (userId) => {
+    getUserById = async (userUid) => {
         try {
-            const resp = await axios.get(USER_API_BASE_URL + '/' + userId);
+            const resp = await axios.get(USER_API_BASE_URL + '/' + userUid);
             return resp.data;
         } catch (err) {
             console.error(err);

@@ -12,6 +12,7 @@ const User = () => {
     let isLoading = useSelector((state) => state.users.loadingActiveUser) === 'pending';
     let activeUser = useSelector((state) => state.users.activeUser);
     let params = useParams();
+    console.log(activeUser);
 
     useEffect(() => {
         dispatch(fetchActiveUser(params.userId))
@@ -33,7 +34,7 @@ const User = () => {
             </Grid>
             <Grid item md={7} sm={12}>
                 <Box sx={{ height: '95%' }}>
-                    <LineChart userId={params.userId} label={activeUser.firstName + " " + activeUser.lastName} />
+                    <LineChart userUid={params.userUid} label={activeUser.firstName + " " + activeUser.lastName} />
                 </Box>
                 <br />
             </Grid>

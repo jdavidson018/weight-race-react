@@ -13,8 +13,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import { Accordion, AccordionDetails, AccordionSummary, } from '@mui/material';
 import { NavLink, Outlet } from 'react-router-dom';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { logout } from '../Services/firebase';
 
 const drawerWidth = 240;
 
@@ -148,14 +153,20 @@ export default function CollapsableNavigationDrawer() {
                                                 color: isActive ? "red" : ""
                                             };
                                         }}
-                                        to={`/users/${user.userId}`}
-                                        key={user.userId}
+                                        to={`${user.userUid}`}
+                                        key={user.userUid}
                                     >
                                         {user.firstName + " " + user.lastName}
                                     </NavLink>
                                 ))}
                             </AccordionDetails>
                         </Accordion>
+                        <ListItem button key={"signout"} onClick={() => logout()}>
+                            <ListItemIcon>
+                                <InboxIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Sign Out" />
+                        </ListItem>
                     </List>
                 </Box>
             </Drawer>

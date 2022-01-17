@@ -7,42 +7,40 @@ import {
 } from "react-router-dom"; import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Dashboard from './Pages/Dashboard';
 import Users from './Pages/Users';
 import User from './Components/User';
 import { Provider } from 'react-redux';
 import store from './Redux/store';
+import Login from './Pages/Auth/Login';
+import Register from './Pages/Auth/Register';
+import Reset from './Pages/Reset';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme();
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-
-      <HashRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="users" element={<Users />} >
+      <ThemeProvider theme={theme}>
+        <HashRouter>
+          <Routes>
+            <Route exact path="/" element={<Login />} index />
+            <Route exact path="/register" element={<Register />} />
+            <Route exact path="/reset" element={<Reset />} />
+            <Route path="/dashboard" element={<App />}>
+              <Route path=":userId" element={<User />} />
               <Route
-                index
+                path="*"
                 element={
                   <main style={{ padding: "1rem" }}>
-                    <p>Select an invoice</p>
+                    <p>There's nothing here!</p>
                   </main>
                 }
               />
-              <Route path=":userId" element={<User />} />
             </Route>
-            <Route
-              path="*"
-              element={
-                <main style={{ padding: "1rem" }}>
-                  <p>There's nothing here!</p>
-                </main>
-              }
-            />
-          </Route>
-        </Routes>
-      </HashRouter>
+          </Routes>
+        </HashRouter>
+      </ThemeProvider>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')
