@@ -82,15 +82,18 @@ export const fetchUsers = () => async (dispatch) => {
 
 export const fetchActiveUser = (userUid) => async (dispatch) => {
     dispatch(activeUserLoading());
-    const response = await UserService.getUserById(userUid);
+    const response = await UserService.getUserByUid(userUid);
     dispatch(activeUserReceived(response));
 }
 
 export const addActiveUserWeight = (weight) => async (dispatch) => {
     dispatch(activeUserWeightsLoading());
+    dispatch(activeUserLoading());
     await WeightService.createWeight(weight);
     const response = await WeightService.getUserWeights(weight.userId);
+    const response1 = await UserService.getUser(weight.userId);
     dispatch(activeUserWeightsReceived(response));
+    dispatch(activeUserReceived(response1));
 }
 
 export const updateActiveUserWeight = (weight) => async (dispatch) => {

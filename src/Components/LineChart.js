@@ -35,10 +35,7 @@ var options = {
         legend: {
             position: 'top',
         },
-        title: {
-            display: true,
-            text: 'Progress',
-        },
+
     },
     scales: {
         x: {
@@ -106,7 +103,7 @@ const LineChart = (props) => {
 }
 
 LineChart.propTypes = {
-    userUid: PropTypes.string.isRequired
+    userUid: PropTypes.string
 }
 
 export default LineChart;

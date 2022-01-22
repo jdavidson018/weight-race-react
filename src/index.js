@@ -14,13 +14,20 @@ import Login from './Pages/Auth/Login';
 import Register from './Pages/Auth/Register';
 import Reset from './Pages/Reset';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from '@mui/material';
 
-const theme = createTheme();
-
+const theme = createTheme({
+  palette: {
+    background: {
+      default: "#F8F8FF"
+    }
+  }
+});
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <HashRouter>
           <Routes>
             <Route exact path="/" element={<Login />} index />

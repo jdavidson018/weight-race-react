@@ -19,9 +19,18 @@ class UserService {
         return resp.filter(x => x.userUid.toString() !== userUid);
     }
 
-    getUserById = async (userUid) => {
+    getUser = async (id) => {
         try {
-            const resp = await axios.get(USER_API_BASE_URL + '/' + userUid);
+            const resp = await axios.get(USER_API_BASE_URL + '/' + id);
+            return resp.data;
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    getUserByUid = async (userUid) => {
+        try {
+            const resp = await axios.get(USER_API_BASE_URL + '/GetUserByUID/' + userUid);
             return resp.data;
         } catch (err) {
             console.error(err);
