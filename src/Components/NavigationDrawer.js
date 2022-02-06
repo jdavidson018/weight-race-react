@@ -7,8 +7,9 @@ import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
 import { NavLink, Outlet } from "react-router-dom";
-import { Accordion, AccordionDetails, AccordionSummary } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, IconButton } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import GitHubIcon from '@mui/icons-material/GitHub';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchUsers } from '../Redux/Slices/usersSlice'
 const drawerWidth = 240;
@@ -31,7 +32,15 @@ export default function NavigationDrawer() {
                         WeightRace
                     </Typography>
                     <Typography variant="h6" component="div" style={{ textAlign: "right", paddingRight: "5%" }} sx={{ flexGrow: 1 }}>
-                        Ryan... you look chubby today.
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                        >
+                            <GitHubIcon />
+                        </IconButton>
                     </Typography>
                 </Toolbar>
             </AppBar>

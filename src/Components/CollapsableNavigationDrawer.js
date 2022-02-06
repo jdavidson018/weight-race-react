@@ -16,6 +16,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import GitHubIcon from '@mui/icons-material/GitHub';
+
 import { Accordion, AccordionDetails, AccordionSummary, } from '@mui/material';
 import { NavLink, Outlet } from 'react-router-dom';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
@@ -107,8 +109,10 @@ export default function CollapsableNavigationDrawer() {
                     <Typography variant="h6" noWrap component="div">
                         WeightRace
                     </Typography>
-                    <Typography variant="h6" component="div" style={{ textAlign: "right", paddingRight: "5%" }} sx={{ flexGrow: 1 }}>
-                        Ryan... you look chubby today.
+                    <Typography variant="h6" component="div" style={{ textAlign: "right", paddingRight: "5%", color: "white" }} sx={{ flexGrow: 1 }}>
+                        <a style={{ color: "white" }} href="https://github.com/jdavidson018/weight-race-react">
+                            <GitHubIcon />
+                        </a>
                     </Typography>
                 </Toolbar>
             </AppBar>
@@ -175,6 +179,6 @@ export default function CollapsableNavigationDrawer() {
                 <Toolbar />
                 <Outlet />
             </Main>
-        </Box>
+        </Box >
     );
 }
